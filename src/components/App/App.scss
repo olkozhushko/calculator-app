@@ -1,0 +1,87 @@
+.calculator-wrapper {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0 , 0, 0.4);
+  margin: 100px auto 0 auto;
+}
+
+.buttons-box {
+  width: 100%;
+  background: rgb(48, 57, 68);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 60px;
+  grid-gap: 1px;
+}
+
+.button {
+  background: linear-gradient(45deg, rgb(241, 238, 238),
+   rgb(226, 226, 233));
+  border: none;
+  outline: none;
+}
+
+.enterbar-container {
+  padding: 0.8rem;
+  background: #3A4655;
+  position: relative;
+}
+
+.enterbar-data-wrapper {
+  border-bottom: 1px dashed rgb(91, 104, 119);
+  padding: 0.2rem 0;
+}
+
+.enterbar-data {
+  display: inline-block;
+  color: #fff8f8;
+  font: 0.8rem/1rem helvetica;
+}
+
+.input-data {
+  width: 100%;
+}
+
+.input-data__input {
+  padding: 0.6rem 0 0.6rem 0.2rem;
+  background: inherit;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #fff8f8;
+  font: 1.2rem/1.2rem "Courier New";
+}
+
+.buttons-box__button {
+  background: #404D5E;
+  border: none;
+  outline: none;
+}
+
+.button-operator {
+  font-size: 1.1rem;
+  color: #ADB2B9;
+}
+
+//clean-button to change color
+.button-operator:nth-child(1) {
+  color: #CE5C4F;
+}
+
+.button-param, .btn-point {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+//plus button to expand on two grid-cells
+.buttons-box__button:nth-child(16) {
+  grid-area: 4 / 4 / 6 / 5;
+}
+
+.buttons-box__button:active {
+  opacity: 0.7;
+}
+
+
+  
