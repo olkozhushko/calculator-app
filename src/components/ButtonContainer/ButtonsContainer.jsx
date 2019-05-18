@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import Button from "../Button/Button";
-import  { addValueToTab } from "../../Actions/index";
+import  { addValueToTab, resolveValue } from "../../Actions/index";
 
 
 const btnSemantic = [
   ["AC", "clear"],
-  ["DEL", "subtract"],
+  ["DEL", "delete"],
   ["%", "module"],
   ["/", "divide"],
   ["7", "seven"],
@@ -26,8 +26,12 @@ const btnSemantic = [
   ["=", "equal"],
 ]
 
-const ButtonContainer = ({onClick, data}) => {
+const ButtonContainer = ({onClick, data, onEqualButtonClick, enteredValue}) => {
   const btns = btnSemantic.map((el, id) => {
+    if(el[1] === "equal") {
+      console.log("equal");
+      return (<Button btnContent={el[0]} id={el[0]} key={id} sepClass={el[1]} onClick={onEqualButtonClick} data={data}/>);
+    }
     return <Button btnContent={el[0]} id={el[0]} key={id} sepClass={el[1]}/>;
   })
 
@@ -39,11 +43,13 @@ const ButtonContainer = ({onClick, data}) => {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.enteredValue
+  data: state.enteredValue,
+  enteredValue: state.enteredValue
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onClick: (e, data) => dispatch(addValueToTab(e, data))
+  onClick: (e, data) => dispatch(addValueToTab(e, data)),
+  onEqualButtonClick: (e, expr) => dispatch(resolveValue(e, expr))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonContainer);

@@ -4,9 +4,10 @@ import calculator from "../js/calculatorMethods";
 import filterText from "../js/filterText";
 
 export const addValueToTab = (e, data) => {
+  
   let target = e.target.closest(".buttons-box__button");
     if(!target) return;
-    console.log("here", data);
+    
     let text = e.target.textContent;
     text = filterText(data + text);
 
@@ -19,20 +20,24 @@ export const addValueToTab = (e, data) => {
 
 export const  addValueToTabFromInput = (e) => {
   
-  console.log(e.target.value);
   let value = filterText(e.target.value);
-
-  console.log(value);
 
   return {
     type: CHANGE_VALUE_IN_TAB,
-    data: value
+    data: value,
+    ansField: true
   }
 }
 
 export const resolveValue = (e, exp) => {
-  if(e.currentTarget.tagName = "FORM") {
+  console.log(e.currentTarget);
+  if(e.currentTarget.tagName === "FORM") {
     e.preventDefault();
+  }
+  
+  console.log("here-resolve");
+  if(e.currentTarget.closest(".equal")) {
+    e.stopPropagation();
   }
 
   let value = calculator.evaluateWholeExpression(exp);

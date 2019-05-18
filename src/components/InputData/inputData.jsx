@@ -3,19 +3,27 @@ import { connect } from "react-redux";
 
 import { addValueToTabFromInput, resolveValue } from "../../Actions/index";
 
-const InputData = ({ inputValue, onChange}) => {
+const InputData = ({ inputValue, onChange, expressionToEval, isExprResolved, resolvedValue, onSubmit, isAnsFieldShown}) => {
+
+  let ansField = isAnsFieldShown ? `Ans = ${resolvedValue}` : "";
+
+  ansField = isExprResolved ? `${expressionToEval} = ` : ansField;
+
+  inputValue = isExprResolved ? resolvedValue : inputValue;
 
   return (
     <div className="enterbar-container">
+
       <div className="enterbar-data-wrapper">
-        <span class="enterbar-data"></span>
+        <span className="enterbar-data">{ansField}</span>
       </div>
+
       <form 
         action="" 
         className="input-data" 
         autoComplete="off"
+        onSubmit={(e) => onSubmit(e, expressionToEval)}
         >
-
         <label htmlFor="data" />
         <input
           type="text"
@@ -34,7 +42,8 @@ const mapStateToProps = (state) => ({
   inputValue: state.enteredValue,
   expressionToEval: state.expressionToEval,
   isExprResolved: state.isExpressionResolved,
-  resolvedValue: state.resolvedValue
+  resolvedValue: state.resolvedValue,
+  isAnsFieldShown: state.isAnsFieldShownRes
 })
 
 const mapDispatchToProps = (dispatch) => ({
