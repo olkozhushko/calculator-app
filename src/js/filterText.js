@@ -1,5 +1,5 @@
 const filterText = (data) => {
-  const oper = ["%", "+", "-", "*", "/", "."];
+  const oper = ["%", "+", "*", "/", "."];
 
   let res = data[0] === "0" ? data.replace(/0/, "") : data;
   res = oper.includes(res[0]) ? "0"+res : res;

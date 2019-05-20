@@ -18,3 +18,25 @@ export const changeValue = (store, data) => {
 
   return {value, count};
 }
+
+export function examDelCharacter(oldState) {
+  let value = oldState.enteredValue;
+  
+  if(value.length > 1) {
+    value = value.slice(0, value.length - 1);
+  } else {
+    value = "0";
+  }
+
+  return value;
+}
+
+export function resolveExpression(oldState, value) {
+  let num = !oldState.isExpressionResolved ? +oldState.switchedCount + 1 : oldState.switchedCount;
+
+  const oper = ["%", "+", "-", "*", "/", "."];
+  
+  let lastVal = value[value.length - 1];
+
+  return {num, isLastVal: oper.includes(lastVal)};
+}

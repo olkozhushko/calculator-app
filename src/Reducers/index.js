@@ -16,15 +16,13 @@ const appReducer = (state=initialState, action) => {
     case RESOLVE_EXPRESSION:
       return resolveExpression(state, action)
     case CLEAN_FIELD:
-      return cleanField(state);
+      return cleanField(state, action);
     case DELETE_ONE_A_TIME:
-      return deleteCharacter(state);
+      return deleteCharacter(state, action);
     default:
       return state;
   }
 }
-
-const oper = ["%", "+", "-", "*", "/", "."];
 
 function changeValue(oldState, action) {
   
@@ -38,11 +36,8 @@ function changeValue(oldState, action) {
 }
 
 function resolveExpression(oldState, action) {
-  let num = !oldState.isExpressionResolved ? +oldState.switchedCount + 1 : oldState.switchedCount;
-  
-  let lastVal = action.value[action.value.length - 1];
 
-  if(oper.includes(lastVal)) {
+  if(action.isLastValHasParam) {
     return {
       ...oldState,
       enteredValue: action.value
@@ -54,34 +49,25 @@ function resolveExpression(oldState, action) {
     resolvedValue: action.value,
     isExpressionResolved: true,
     expressionToEval: oldState.enteredValue,
-    switchedCount: num
+    switchedCount: action.count
   }
 }
 
-function cleanField(oldState) {
-  let num = oldState.isExpressionResolved ? +oldState.switchedCount + 1 : oldState.switchedCount;
+function cleanField(oldState, action) {
 
   return {
     ...oldState,
     enteredValue: "0",
     isExpressionResolved: false,
-    switchedCount: num
+    switchedCount: action.count
   }
 }
 
 
-function deleteCharacter(oldState) {
-  let value = oldState.enteredValue;
-  
-  if(value.length > 1) {
-    value = value.slice(0, value.length - 1);
-  } else {
-    value = "0";
-  }
-  
+function deleteCharacter(oldState, action) {
   return {
     ...oldState,
-    enteredValue: value
+    enteredValue: action.value
   }
 }
 

@@ -40,20 +40,3 @@
   opacity: 0.7;
 }
 
-@keyframes animateInput {
-  0% {
-    font-size: 1.1rem
-  }
-
-  60% {
-    font-size: 1.5rem;
-  }
-
-  100% {
-    font-size: 1.1rem;
-  }
-}
-
-.animate-text {
-  animation: animateInput 0.3s linear;
-}

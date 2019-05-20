@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import "./inputData.scss";
@@ -38,6 +39,15 @@ const InputData = ({ inputValue, onChange, expressionToEval, isExprResolved, res
     </div>
   );
 };
+
+InputData.propTypes = {
+  inputValue: PropTypes.string.isRequired,
+  expressionToEval: PropTypes.string.isRequired,
+  isExprResolved: PropTypes.bool.isRequired,
+  resolvedValue: PropTypes.string.isRequired,
+  isAnsFieldShown: PropTypes.bool.isRequired
+}
+
 
 const mapStateToProps = (state) => ({
   inputValue: state.enteredValue,

@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import Button from "../Button/Button";
 import  { addValueToTab, resolveValue, cleanBarField, deleteCharacter } from "../../Actions/index";
 import "./ButtonContainer.scss";
@@ -53,6 +55,14 @@ const ButtonContainer = ({onClick, data, onEqualButtonClick, onClearButtonClick,
       {btns}
     </div>
   )
+}
+
+ButtonContainer.propTypes = {
+  data: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onEqualButtonClick: PropTypes.func.isRequired,
+  onClearButtonClick: PropTypes.func.isRequired,
+  onDeleteButtonClick: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

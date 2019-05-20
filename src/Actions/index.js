@@ -3,13 +3,12 @@ import { CHANGE_VALUE_IN_TAB, RESOLVE_EXPRESSION,  CLEAN_FIELD, DELETE_ONE_A_TIM
 import calculator from "../js/calculatorMethods";
 import filterText from "../js/filterText";
 import store from "../Store/index";
-import { changeValue } from "../Actions/actionHelperFunction";
+import { changeValue, examDelCharacter, resolveExpression } from "../Actions/actionHelperFunction";
 
 export const addValueToTab = (e, data) => {
-  console.log("state", store.getState());
 
   let target = e.target.closest(".buttons-box__button");
-    if(!target) return;
+    if(!target) return {type: ""};
     
     let text = e.target.textContent;
     text = filterText(data + text);
@@ -55,25 +54,38 @@ export const resolveValue = (e, exp) => {
   } else {
     value = calculator.evaluateWholeExpression(exp);
   }
+  
+  let params = resolveExpression(store.getState(), value);
+  console.log(params);
 
   return {
     type: RESOLVE_EXPRESSION,
-    value
+    value,
+    count: params.num,
+    isLastValHasParam: params.isLastVal
   }
 }
 
 export const cleanBarField = (e) => {
   e.stopPropagation();
+
+  let oldState = store.getState();
+
+  let num = oldState.isExpressionResolved ? +oldState.switchedCount + 1 : oldState.switchedCount;
   
   return {
-    type: CLEAN_FIELD
+    type: CLEAN_FIELD,
+    count: num
   }
 }
 
 export const deleteCharacter = (e) => {
   e.stopPropagation();
 
+  let value = examDelCharacter(store.getState());
+
   return {
-    type: DELETE_ONE_A_TIME
+    type: DELETE_ONE_A_TIME,
+    value
   }
 }
