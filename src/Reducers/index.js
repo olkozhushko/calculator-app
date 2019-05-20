@@ -1,4 +1,4 @@
-import { CHANGE_VALUE_IN_TAB, RESOLVE_EXPRESSION } from "../Actions/constants";
+import { CHANGE_VALUE_IN_TAB, RESOLVE_EXPRESSION, CLEAN_FIELD, DELETE_ONE_A_TIME} from "../Actions/constants";
 
 const initialState = {
   enteredValue: "0",
@@ -12,30 +12,79 @@ const initialState = {
 const appReducer = (state=initialState, action) => {
   switch(action.type) {
     case CHANGE_VALUE_IN_TAB:
-      let count = state.isExpressionResolved ? +state.switchedCount + 1 : state.switchedCount;
-      console.log(count);
-      let value = count > 0 && count % 2 === 0 && state.isExpressionResolved ? action.data[action.data.length-1] : action.data;
-
-      return {
-        ...state,
-        enteredValue: value,
-        isAnsFieldShownRes: true,
-        isExpressionResolved: false,
-        switchedCount: count
-      }
+      return changeValue(state, action);
     case RESOLVE_EXPRESSION:
-      let num = !state.isExpressionResolved ? +state.switchedCount + 1 : state.switchedCount;
-      
-      return {
-        ...state,
-        resolvedValue: action.value,
-        isExpressionResolved: true,
-        expressionToEval: state.enteredValue,
-        switchedCount: num
-      }
+      return resolveExpression(state, action)
+    case CLEAN_FIELD:
+      return cleanField(state);
+    case DELETE_ONE_A_TIME:
+      return deleteCharacter(state);
     default:
       return state;
   }
 }
+
+const oper = ["%", "+", "-", "*", "/", "."];
+
+function changeValue(oldState, action) {
+  
+  return {
+    ...oldState,
+    enteredValue: action.data,
+    isAnsFieldShownRes: true,
+    isExpressionResolved: false,
+    switchedCount: action.count
+  }
+}
+
+function resolveExpression(oldState, action) {
+  let num = !oldState.isExpressionResolved ? +oldState.switchedCount + 1 : oldState.switchedCount;
+  
+  let lastVal = action.value[action.value.length - 1];
+
+  if(oper.includes(lastVal)) {
+    return {
+      ...oldState,
+      enteredValue: action.value
+    }
+  }
+      
+  return {
+    ...oldState,
+    resolvedValue: action.value,
+    isExpressionResolved: true,
+    expressionToEval: oldState.enteredValue,
+    switchedCount: num
+  }
+}
+
+function cleanField(oldState) {
+  let num = oldState.isExpressionResolved ? +oldState.switchedCount + 1 : oldState.switchedCount;
+
+  return {
+    ...oldState,
+    enteredValue: "0",
+    isExpressionResolved: false,
+    switchedCount: num
+  }
+}
+
+
+function deleteCharacter(oldState) {
+  let value = oldState.enteredValue;
+  
+  if(value.length > 1) {
+    value = value.slice(0, value.length - 1);
+  } else {
+    value = "0";
+  }
+  
+  return {
+    ...oldState,
+    enteredValue: value
+  }
+}
+
+
 
 export default appReducer;

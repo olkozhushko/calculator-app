@@ -6,8 +6,6 @@ import './App.scss';
 import InputData from "../InputData/inputData";
 import ButtonsContainer from "../ButtonContainer/ButtonsContainer";
 
-console.log(store.getState());
-
 class App extends Component {
   constructor(props) {
     super(props);

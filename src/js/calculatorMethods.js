@@ -35,8 +35,7 @@ class CalculatorMethods {
     for(let i = 0; i < this.methodPrec.length; i++) {
       const regexp = new RegExp(`(\\d+\\.?\\d*)([\\${this.methodPrec[i].join('\\')}])(\\d+\\.?\\d*)`);
       regexp.lastIndex = 0;
-
-      console.log(input.match(regexp));
+      
       
       //loop through value untill there are no expression left
       while(regexp.test(input)) {

@@ -1,38 +1,51 @@
 import React from "react";
 import { connect } from "react-redux";
 import Button from "../Button/Button";
-import  { addValueToTab, resolveValue } from "../../Actions/index";
+import  { addValueToTab, resolveValue, cleanBarField, deleteCharacter } from "../../Actions/index";
+import "./ButtonContainer.scss";
 
 
 const btnSemantic = [
   ["AC", "clear"],
   ["DEL", "delete"],
-  ["%", "module"],
-  ["/", "divide"],
-  ["7", "seven"],
-  ["8", "eight"],
-  ["9", "nine"],
-  ["*", "multiply"],
-  ["4", "four"],
-  ["5", "five"],
-  ["6", "six"],
-  ["-", "subtract"],
-  ["1", "one"],
-  ["2", "two"],
-  ["3", "three"],
-  ["+", "plus"],
+  ["%", "operator"],
+  ["/", "operator"],
+  ["7", "param"],
+  ["8", "param"],
+  ["9", "param"],
+  ["*", "operator"],
+  ["4", "param"],
+  ["5", "param"],
+  ["6", "param"],
+  ["-", "operator"],
+  ["1", "param"],
+  ["2", "param"],
+  ["3", "param"],
+  ["+", "operator"],
   [".", "point"],
-  ["0", "zero"],
+  ["0", "param"],
   ["=", "equal"],
 ]
 
-const ButtonContainer = ({onClick, data, onEqualButtonClick, enteredValue}) => {
+const ButtonContainer = ({onClick, data, onEqualButtonClick, onClearButtonClick, onDeleteButtonClick}) => {
+  
+  //map through array with button semantics to group them in one array
+  //and separate logic for specific buttons such as "=", "AC" and "DEL"
   const btns = btnSemantic.map((el, id) => {
+
     if(el[1] === "equal") {
-      console.log("equal");
-      return (<Button btnContent={el[0]} id={el[0]} key={id} sepClass={el[1]} onClick={onEqualButtonClick} data={data}/>);
+      return (<Button btnContent={el[0]} key={id} sepClass={el[1]} onClick={onEqualButtonClick} data={data}/>);
     }
-    return <Button btnContent={el[0]} id={el[0]} key={id} sepClass={el[1]}/>;
+
+    if(el[1] === "clear") {
+      return (<Button btnContent={el[0]} key={id} sepClass={el[1]} onClick={onClearButtonClick} />);
+    }
+
+    if(el[1] === "delete") {
+      return (<Button btnContent={el[0]} key={id} sepClass={el[1]} onClick={onDeleteButtonClick} />);
+    }
+
+    return <Button btnContent={el[0]} key={id} sepClass={el[1]}/>;
   })
 
   return (
@@ -43,13 +56,14 @@ const ButtonContainer = ({onClick, data, onEqualButtonClick, enteredValue}) => {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.enteredValue,
-  enteredValue: state.enteredValue
+  data: state.enteredValue
 })
 
 const mapDispatchToProps = (dispatch) => ({
   onClick: (e, data) => dispatch(addValueToTab(e, data)),
-  onEqualButtonClick: (e, expr) => dispatch(resolveValue(e, expr))
+  onEqualButtonClick: (e, expr) => dispatch(resolveValue(e, expr)),
+  onClearButtonClick: (e) => dispatch(cleanBarField(e)),
+  onDeleteButtonClick: (e) => dispatch(deleteCharacter(e))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonContainer);

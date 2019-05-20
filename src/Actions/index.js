@@ -1,19 +1,25 @@
-import { CHANGE_VALUE_IN_TAB, RESOLVE_EXPRESSION } from "./constants";
+import { CHANGE_VALUE_IN_TAB, RESOLVE_EXPRESSION,  CLEAN_FIELD, DELETE_ONE_A_TIME} from "./constants";
 
 import calculator from "../js/calculatorMethods";
 import filterText from "../js/filterText";
+import store from "../Store/index";
+import { changeValue } from "../Actions/actionHelperFunction";
 
 export const addValueToTab = (e, data) => {
-  
+  console.log("state", store.getState());
+
   let target = e.target.closest(".buttons-box__button");
     if(!target) return;
     
     let text = e.target.textContent;
     text = filterText(data + text);
 
+    let params = changeValue(store, text);
+
     return {
       type: CHANGE_VALUE_IN_TAB,
-      data: text
+      data: params.text,
+      count: params.count
     }
   
 }
@@ -21,29 +27,50 @@ export const addValueToTab = (e, data) => {
 export const  addValueToTabFromInput = (e) => {
   
   let value = filterText(e.target.value);
+  value = value === "" ? 0 : value;
 
   return {
     type: CHANGE_VALUE_IN_TAB,
-    data: value,
-    ansField: true
+    data: value
   }
 }
 
 export const resolveValue = (e, exp) => {
-  console.log(e.currentTarget);
+  const oper = ["%", "+", "-", "*", "/", "."];
+  let value;
+
   if(e.currentTarget.tagName === "FORM") {
     e.preventDefault();
   }
   
-  console.log("here-resolve");
-  if(e.currentTarget.closest(".equal")) {
+  if(e.currentTarget.closest(".button-equal")) {
     e.stopPropagation();
   }
-
-  let value = calculator.evaluateWholeExpression(exp);
+  
+  if(oper.includes(exp[exp.length -1])) {
+    value = exp;
+  } else {
+    value = calculator.evaluateWholeExpression(exp);
+  }
 
   return {
     type: RESOLVE_EXPRESSION,
     value
+  }
+}
+
+export const cleanBarField = (e) => {
+  e.stopPropagation();
+  
+  return {
+    type: CLEAN_FIELD
+  }
+}
+
+export const deleteCharacter = (e) => {
+  e.stopPropagation();
+
+  return {
+    type: DELETE_ONE_A_TIME
   }
 }

@@ -1,0 +1,59 @@
+.buttons-box {
+  width: 100%;
+  background: rgb(48, 57, 68);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 60px;
+  grid-gap: 1px;
+}
+
+.buttons-box__button {
+  background: linear-gradient(45deg, rgb(241, 238, 238),
+   rgb(226, 226, 233));
+  border: none;
+  outline: none;
+  background: #404D5E;
+}
+
+.button-operator, .button-equal, .button-delete {
+  font-size: 1.1rem;
+  color: #ADB2B9;
+}
+
+//clean-button to change color
+.button-clear {
+  color: #CE5C4F;
+  font-size: 1.1rem;
+}
+
+.button-param, .button-point {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+//plus button to expand on two grid-cells
+.buttons-box__button:nth-child(16) {
+  grid-area: 4 / 4 / 6 / 5;
+}
+
+.buttons-box__button:active {
+  opacity: 0.7;
+}
+
+@keyframes animateInput {
+  0% {
+    font-size: 1.1rem
+  }
+
+  60% {
+    font-size: 1.5rem;
+  }
+
+  100% {
+    font-size: 1.1rem;
+  }
+}
+
+.animate-text {
+  animation: animateInput 0.3s linear;
+}

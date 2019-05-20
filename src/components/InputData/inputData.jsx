@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import "./inputData.scss";
+
 import { addValueToTabFromInput, resolveValue } from "../../Actions/index";
 
 const InputData = ({ inputValue, onChange, expressionToEval, isExprResolved, resolvedValue, onSubmit, isAnsFieldShown}) => {
@@ -8,7 +10,6 @@ const InputData = ({ inputValue, onChange, expressionToEval, isExprResolved, res
   let ansField = isAnsFieldShown ? `Ans = ${resolvedValue}` : "";
 
   ansField = isExprResolved ? `${expressionToEval} = ` : ansField;
-
   inputValue = isExprResolved ? resolvedValue : inputValue;
 
   return (
@@ -20,9 +21,9 @@ const InputData = ({ inputValue, onChange, expressionToEval, isExprResolved, res
 
       <form 
         action="" 
-        className="input-data" 
+        className={`input-data`}
         autoComplete="off"
-        onSubmit={(e) => onSubmit(e, expressionToEval)}
+        onSubmit={(e) => onSubmit(e, inputValue)}
         >
         <label htmlFor="data" />
         <input

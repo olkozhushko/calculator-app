@@ -1,15 +1,12 @@
 import React from "react";
 
-const Button = ({btnContent, id, sepClass, onClick, data}) => {
-  
-  let idPar = Number.isNaN(+id) ? "operator" : "param";
-  // let pointClass = id === "." ? "btn-point" : "";
+const Button = ({btnContent, sepClass, onClick, data}) => {
 
   if(onClick) {
     return (
       <button 
         type="button" 
-        className={`button-${idPar} buttons-box__button ${sepClass}`}
+        className={`button-${sepClass} buttons-box__button`}
         onClick={(e) => onClick(e, data)}>
         {btnContent}
       </button>
@@ -18,7 +15,7 @@ const Button = ({btnContent, id, sepClass, onClick, data}) => {
       return (
         <button 
           type="button" 
-          className={`button-${idPar} buttons-box__button ${sepClass}`}>
+          className={`button-${sepClass} buttons-box__button `}>
           {btnContent}
         </button>
       )

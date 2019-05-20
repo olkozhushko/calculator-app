@@ -1,0 +1,30 @@
+.enterbar-container {
+  padding: 0.8rem;
+  background: #3A4655;
+  position: relative;
+}
+
+.enterbar-data-wrapper {
+  border-bottom: 1px dashed rgb(91, 104, 119);
+  padding: 0.2rem 0;
+}
+
+.enterbar-data {
+  display: inline-block;
+  color: #fff8f8;
+  font: 0.8rem/1rem helvetica;
+}
+
+.input-data {
+  width: 100%;
+}
+
+.input-data__input {
+  padding: 0.6rem 0 0.6rem 0.2rem;
+  background: inherit;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #fff8f8;
+  font: 1.2rem/1.2rem "Courier New";
+}
