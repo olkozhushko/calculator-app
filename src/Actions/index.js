@@ -18,7 +18,7 @@ export const addValueToTab = (e, data) => {
 
     return {
       type: CHANGE_VALUE_IN_TAB,
-      data: params.text,
+      data: params.value,
       count: params.count
     }
   
@@ -29,9 +29,12 @@ export const  addValueToTabFromInput = (e) => {
   let value = filterText(e.target.value);
   value = value === "" ? 0 : value;
 
+  let params = changeValue(store, value);
+
   return {
     type: CHANGE_VALUE_IN_TAB,
-    data: value
+    data: params.value,
+    count: params.count
   }
 }
 
