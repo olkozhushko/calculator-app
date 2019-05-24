@@ -1,7 +1,7 @@
 import { CHANGE_VALUE_IN_TAB, RESOLVE_EXPRESSION,  CLEAN_FIELD, DELETE_ONE_A_TIME} from "./constants";
 
-import calculator from "../js/calculatorMethods";
-import filterText from "../js/filterText";
+import calculator from "../utils/calculatorMethods";
+import filterText from "../utils/filterText";
 import store from "../Store/index";
 import { changeValue, examDelCharacter, resolveExpression } from "../Actions/actionHelperFunction";
 
